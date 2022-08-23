@@ -36,14 +36,21 @@ public class EnLearnApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		List<String> wordList = fileUtils.loadData();
-		ThreadPoolExecutor pool = new ThreadPoolExecutor(10, 10, 0, TimeUnit.SECONDS, new SynchronousQueue<>(), new ThreadPoolExecutor.CallerRunsPolicy());
+		//使用SynchronousQueue来一个提交一个
+		//使用CallerRunsPolicy保证所有任务都被执行
+
+
+		//由于该项目属于io密集型项目,建议corePoolSize设置为2倍cpu核心数量+1,同时要保障maximumPoolSize>=corePoolSize
+		ThreadPoolExecutor pool = new ThreadPoolExecutor(13, 13, 2, TimeUnit.SECONDS, new SynchronousQueue<>(), new ThreadPoolExecutor.CallerRunsPolicy());
 		for (String word : wordList) {
-			pool.submit(() ->{
+			pool.submit(() ->{//submit不会报异常
 				try {
 					Word obj = youdaoWeb.analyse(word);
 					fileUtils.persistWord(obj);
-					byte[] bts = httpHelper.getMp3(word);
-					fileUtils.persistAudio(word, bts);
+					byte[] ukAudio = httpHelper.getMp3UK(word);
+					byte[] uSAudio = httpHelper.getMp3US(word);
+					fileUtils.persistUKAudio(word, ukAudio);
+					fileUtils.persistUSAudio(word, ukAudio);
 				} catch (IOException e) {
 					e.printStackTrace();
 					log.error("{} error", word);

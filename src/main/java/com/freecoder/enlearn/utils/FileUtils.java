@@ -51,11 +51,11 @@ public class FileUtils {
         }
     }
 
-    public void persistAudio(String word, byte[] bts) throws IOException {
+    public void persistUKAudio(String word, byte[] bts) throws IOException {
         if(!new File("mp3").exists()) {
             new File("mp3").mkdir();
         }
-        File mp3File = new File("mp3/" + word + ".mp3");
+        File mp3File = new File("mp3/" + word + "_uk.mp3");
         if (mp3File.exists()) {
             return;
         }
@@ -63,4 +63,17 @@ public class FileUtils {
             out.write(bts);
         }
     }
+    public void persistUSAudio(String word, byte[] bts) throws IOException {
+        if(!new File("mp3").exists()) {
+            new File("mp3").mkdir();
+        }
+        File mp3File = new File("mp3/" + word + "_us.mp3");
+        if (mp3File.exists()) {
+            return;
+        }
+        try(FileOutputStream out = new FileOutputStream(mp3File)){
+            out.write(bts);
+        }
+    }
+
 }

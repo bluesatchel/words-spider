@@ -9,12 +9,17 @@ import org.springframework.web.client.RestTemplate;
  */
 @Component
 public class HttpHelper {
+    //type=1是英式发音,type=2是美式发音
     static String url = "https://dict.youdao.com/dictvoice?audio=";
 
     RestTemplate restTemplate = new RestTemplate();
-
-    public byte[] getMp3(String word) {
-        return restTemplate.getForObject(url + word, byte[].class);
+    //获取英式发音
+    public byte[] getMp3UK(String word) {
+        return restTemplate.getForObject(url + word+"&type=1", byte[].class);
+    }
+    //获取美式发音
+    public byte[] getMp3US(String word) {
+        return restTemplate.getForObject(url + word+"&type=2", byte[].class);
     }
 
 

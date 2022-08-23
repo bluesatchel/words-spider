@@ -31,10 +31,11 @@ public class YoudaoWeb {
             log.error("{} 在词典查不到", word);
             return null;
         }
-
-        // 获取美式音标
         Elements phoneticEles = doc.select(".baav .phonetic");
-        String phonetic = phoneticEles == null || phoneticEles.size() == 0?"":(phoneticEles.size() == 1? phoneticEles.get(0).text() : phoneticEles.get(1).text());
+        //获取英式音标
+        String uk_phonetic = phoneticEles == null || phoneticEles.size() == 0?"":(phoneticEles.size() == 1? phoneticEles.get(0).text() : phoneticEles.get(0).text());
+        // 获取美式音标
+        String us_phonetic = phoneticEles == null || phoneticEles.size() == 0?"":(phoneticEles.size() == 1? phoneticEles.get(0).text() : phoneticEles.get(1).text());
 
         // 单词解释
         List<String> explains = new ArrayList<>();
@@ -62,6 +63,6 @@ public class YoudaoWeb {
                 sentences.add(new Pair<>(sentenceEles.get(2*i).text(), sentenceEles.get(2*i+1).text().trim()));
             }
         }
-        return new Word(word, phonetic, explains, wordGroup, sentences);
+        return new Word(word, uk_phonetic,us_phonetic, explains, wordGroup, sentences);
     }
 }
