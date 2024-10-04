@@ -72,11 +72,4 @@
     "speakUrl":"https://openapi.youdao.com/ttsapi?q=obvious&langType=en&sign=D56475319250AC087A2F7A73CAE79ABC&salt=1651249822775&voice=4&format=mp3&appKey=2423360539ba5632&ttsVoiceStrict=false"
 }
 ```
-
 在原作者的代码上添加了获取英式音标和英式发音的代码
-
-
-
-#### 免责声明
-
-仅供学习参考,切勿用于商业行为,损害他人利益与本人无关
